@@ -24,6 +24,15 @@ void Bullet::draw() {
 	ofDrawCircle(pos.x, pos.y, size);
 }
 
+bool Bullet::collide(ofVec2f planet, float pSize){
+	bool collided = false;
+	if (planet.distance(pos)< pSize/2) {
+		collided = true;
+	}
+	return collided;
+}
+
+
 Bullet::Bullet() {
 }
 
