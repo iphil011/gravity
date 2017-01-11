@@ -7,7 +7,7 @@ Player::Player()
 }
 void Player::setup(int play, ofVec2f _planet, float _dist) {
 	hit = false;
-	pos = ofVec2f(0,0);
+	//pos = ofVec2f(0,0);
 	speed = 2;
 	size = 30;
 	theta = ofRandom(0, 360);
@@ -18,14 +18,14 @@ void Player::setup(int play, ofVec2f _planet, float _dist) {
 }
 
 void Player::update() {
-	
-}
-
-void Player::draw() {
 	ofVec2f angle = ofVec2f(0, 0);
 	angle.x = (size + dist)*cos(theta);
 	angle.y = (size + dist)*sin(theta);
 	pos = planet + angle;
+}
+
+void Player::draw() {
+	
 	//ofLog() << pos;
 
 	ofDrawCircle(pos.x, pos.y, size);

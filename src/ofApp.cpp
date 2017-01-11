@@ -22,9 +22,8 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	for (auto play : players) {
+	for (auto & play : players) {
 		play.update();
-		
 	}
 	for (auto & plan : planets) {
 		for (auto & bull : bullets) {
