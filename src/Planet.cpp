@@ -11,6 +11,8 @@ Planet::Planet() {
 		ofLog() << "rerolled";
 	}
 	void Planet::draw() {
+		ofSetColor(255);
+		ofFill();
 		ofDrawCircle(pos.x, pos.y, size);
 	}
 
@@ -26,6 +28,9 @@ Planet::Planet() {
 		else {
 			g = mass*0.2 / pos.distance(target);
 		}
+		
+
+		
 			ofVec2f Gravity = pos - target;
 			Gravity.normalize();
 			Gravity*g;

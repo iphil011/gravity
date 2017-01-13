@@ -1,10 +1,10 @@
 #include "Bullet.h"
 
-void Bullet::setup(ofVec2f play, ofVec2f target ) {
+void Bullet::setup(ofVec2f play, ofVec2f target, float _strength ) {
 	pos = play;
 	vel = target- pos;
 	vel.normalize();
-	vel* 0.001;
+	vel* _strength;
 	//acc = ofVec2f(1, 1);
 	size = 10;
 }
@@ -15,7 +15,7 @@ void Bullet::update(ofVec2f grav) {
 	vel += acc;
 	acc.normalize();
 	acc.limit(0.00001);
-	vel.limit(1.5);
+	vel.limit(5);
 	pos += vel;
 }
 
@@ -26,7 +26,7 @@ void Bullet::draw() {
 
 bool Bullet::collide(ofVec2f planet, float pSize){
 	bool collided = false;
-	if (planet.distance(pos)< pSize/2) {
+	if (planet.distance(pos)< pSize) {
 		collided = true;
 	}
 	return collided;

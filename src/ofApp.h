@@ -25,4 +25,5 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 		void distanceCheck();
+		Planet closest(ofVec2f bullet, vector<Planet> p);
 };
