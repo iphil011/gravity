@@ -54,14 +54,15 @@ void Player::draw() {
 	case 4: ofSetColor(255,255,0);
 		break;
 	}
-	ofFill();
-	ofDrawCircle(pos.x, pos.y, size);
-	ofSetColor(255);
-	
+	if (hit == false) {
+		ofFill();
+		ofDrawCircle(pos.x, pos.y, size);
+		
+	}
 }
 
 void Player::indi(){
-	
+	ofSetColor(255);
 	ofDrawCircle(indic.x, indic.y, size / 5);
 
 }

@@ -1,21 +1,14 @@
 #include "ofApp.h"
-vector<Planet> planets;
-vector<Player> players;
-vector<Bullet> bullets;
-int turn;
-int bulletTimer;
-float strength;
+
 /*
 to do:
 fix reroll function
-implement player collision
-menu screen?
 */
 
 
 //--------------------------------------------------------------
 void ofApp::setup() {
-	//ofSetWindowShape(1000, 1000);
+	//ofLog() << ofGetWidth() << ofGetHeight();
 	
 	//creates 4 planets and puts a player on each one
 	for (int i = 0; i < 4; i++) {
@@ -27,12 +20,12 @@ void ofApp::setup() {
 		distanceCheck();
 	}
 	bulletTimer = 0;
-
+	strengthG = false;
 }
 
 //--------------------------------------------------------------
 void ofApp::update() {
-	if (players[turn].hit) {
+	while (players[turn].hit) {
 		turn++;
 		if (turn >= players.size()) {
 			turn = 0;
@@ -43,9 +36,10 @@ void ofApp::update() {
 	}
 	//finds closest planet to the bullet and applies its gravity;
 	for (auto & bull : bullets) {
-		bull.update(closest(bull.pos, planets).gravity(bull.pos));
+
+		bull.update(closest(bull.pos, planets).gravity(bull.pos), bulletTimer);
 		for (int i = 0; i < players.size(); i++) {
-			if (players[i].collide(bull.pos) && bulletTimer<2200) {
+			if (players[i].collide(bull.pos) && bulletTimer<2300) {
 				players[i].hit = true;
 				break;
 			}
@@ -55,8 +49,8 @@ void ofApp::update() {
 		if (bullets.size() > 0) {
 			if (bullets[0].collide(plan.pos, plan.size)) {
 				bullets.clear();
-				bulletTimer = 0;
-			}// iterator deletion (breaks when bullet hits start planet)
+				bulletTimer = 5;
+			}// bullet hits planet
 		}
 	}
 	
@@ -66,9 +60,20 @@ void ofApp::update() {
 		bulletTimer--;
 		//ofLog() << bulletTimer;
 	}
+	if (bulletTimer == 1) {
+		turn++;
+		if (turn >= players.size()) {
+			turn = 0;
+		}
+	}
 	if (bulletTimer == 0) {
 		bullets.clear();
 	}
+	if (strengthG) {
+		if (strength < 2);
+		strength += 0.005;
+	}
+	//ofLog() << strength;
 }
 
 //--------------------------------------------------------------
@@ -123,8 +128,8 @@ void ofApp::mouseDragged(int x, int y, int button) {
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button) {
-	if (strength < 5);
-	strength ++;
+	strengthG = true;
+	
 }
 
 //--------------------------------------------------------------
@@ -135,11 +140,14 @@ void ofApp::mouseReleased(int x, int y, int button) {
 		tempBull.setup(players[turn].getPos(), ofVec2f(x, y), strength);
 		//tempBull.setup(ofVec2f(x,y), ofVec2f(x, y), strength);
 		bullets.push_back(tempBull);
-		turn++;
+		/*turn++;
 		if (turn >= players.size()) {
 			turn = 0;
 		}
+		*/
 		bulletTimer = 2400;
+		strengthG = false;
+		strength = 0;
 	}
 }
 
@@ -178,10 +186,9 @@ void ofApp::distanceCheck() {
 				Planet plan1 = planets[i];
 				Planet plan2 = planets[j];
 				while (plan1.pos.distance(plan2.pos) <= plan2.size + plan1.size + 30) {
+					//ofLog() << plan1.pos.distance(plan2.pos) << " " << plan2.size + plan1.size + 30;
 					plan2.reroll();
-					if (plan2.pos.distance(plan1.pos) <= plan2.size + plan1.size + 30) {
-						rerolled = true;
-					}
+					rerolled = true;
 				}
 			}
 		}

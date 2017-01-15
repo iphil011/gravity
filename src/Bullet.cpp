@@ -4,23 +4,27 @@ void Bullet::setup(ofVec2f play, ofVec2f target, float _strength ) {
 	pos = play;
 	vel = target- pos;
 	vel.normalize();
-	vel* _strength;
-	//acc = ofVec2f(1, 1);
+	vel.scale(_strength);
 	size = 10;
 }
 
-void Bullet::update(ofVec2f grav) {
+void Bullet::update(ofVec2f grav, int timer) {
+	//ofLog() << vel.length();
 	grav.limit(0.005);
-	acc += grav;
+	if (timer < 2390) {
+		acc += grav;
+	}
 	vel += acc;
 	acc.normalize();
 	acc.limit(0.00001);
-	vel.limit(5);
+	vel.limit(2);
 	pos += vel;
 }
 
 
 void Bullet::draw() {
+	ofSetColor(255);
+	ofFill();
 	ofDrawCircle(pos.x, pos.y, size);
 }
 

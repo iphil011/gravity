@@ -12,7 +12,6 @@ class ofApp : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
-
 		void keyPressed(int key);
 		void keyReleased(int key);
 		void mouseMoved(int x, int y );
@@ -26,4 +25,11 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 		void distanceCheck();
 		Planet closest(ofVec2f bullet, vector<Planet> p);
+		vector<Planet> planets;
+		vector<Player> players;
+		vector<Bullet> bullets;
+		int turn;
+		int bulletTimer;
+		float strength;
+		bool strengthG;
 };
